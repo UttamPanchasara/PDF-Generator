@@ -1,0 +1,42 @@
+<resources>
+    <string name="app_name">PDF</string>
+    <string name="content">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer laoreet sapien et tempor
+        volutpat. Nunc ornare, velit ac scelerisque bibendum, ipsum nulla molestie ipsum, id dictum nulla nisl ut est.
+        Proin dapibus ut felis nec congue. Orci varius natoque penatibus et magnis dis parturient montes, nascetur
+        ridiculus mus. Cras auctor mollis nisl a egestas. Vestibulum ante ipsum primis in faucibus orci luctus et
+        ultrices posuere cubilia Curae; Pellentesque dui arcu, auctor a tempus vel, iaculis mattis diam. Integer feugiat
+        imperdiet arcu, tincidunt dictum elit. Aenean viverra, sem sit amet ultricies sodales, odio libero placerat
+        diam, non finibus enim dolor vitae sem. Fusce eget mi ut eros condimentum elementum. Sed egestas eu risus eget
+        semper. Suspendisse varius tempor arcu, ut pharetra purus bibendum et. Donec bibendum est sem, vel efficitur
+        quam gravida et. Phasellus augue massa, malesuada in sagittis id, congue ac nunc. Sed felis mi, eleifend sit
+        amet odio ut, blandit sagittis turpis. Sed vulputate ac urna sed pellentesque.
+
+        Aenean rhoncus volutpat odio. Cras eu venenatis risus, sed faucibus ex. Sed ante dui, ultricies et gravida at,
+        molestie vel dui. In diam lacus, blandit sagittis enim quis, ullamcorper egestas massa. Nam luctus suscipit
+        lectus. In convallis enim dapibus laoreet ornare. In eget semper purus. Vestibulum in dolor sit amet nisi
+        gravida hendrerit. Phasellus iaculis ut turpis a fringilla. Vestibulum vestibulum tortor ut dolor pharetra
+        aliquet. Sed non turpis semper, convallis ipsum vel, sollicitudin ipsum. Vestibulum varius massa hendrerit nisl
+        vestibulum egestas. Fusce quam elit, fermentum sit amet tincidunt at, mattis sit amet ipsum. Maecenas dictum mi
+        quis diam faucibus laoreet. Cras feugiat nisi eget viverra cursus.
+
+        Sed et orci nisl. Nulla vel sem semper tellus dignissim porta. Curabitur scelerisque venenatis lorem, ac
+        dignissim nisl. Etiam semper at felis mollis varius. Cras hendrerit turpis vitae ipsum auctor pretium. Donec
+        dignissim augue et auctor fringilla. Nam ac arcu ullamcorper, posuere ante imperdiet, pellentesque neque. Aenean
+        luctus et erat a efficitur. In ullamcorper libero orci, vel dictum nunc facilisis ut. Morbi eros lorem, tempor
+        luctus augue sed, fringilla aliquam elit.
+
+        Proin sed convallis orci. Integer pharetra luctus sem eu elementum. Nunc consequat, ipsum sed sollicitudin
+        interdum, sapien massa fermentum lacus, vel fringilla nisi augue ac enim. Maecenas eu metus non diam facilisis
+        blandit sed et nisi. Duis laoreet viverra dapibus. Cras fringilla sem sed turpis pulvinar ornare. Phasellus
+        tincidunt eget nunc at aliquam. Vivamus consectetur, massa ut suscipit volutpat, enim tellus fringilla orci, eu
+        porta neque odio sed libero. Fusce vel scelerisque tortor. Aliquam lacinia rhoncus vestibulum. Proin tincidunt
+        sit amet nisl eu elementum.
+
+        Morbi vestibulum malesuada blandit. Donec sit amet tellus et est elementum lobortis vitae ac quam. Suspendisse
+        quis nisl leo. Sed aliquam urna neque, eu iaculis augue egestas eget. Nam porttitor, augue et interdum commodo,
+        ligula magna egestas turpis, eget vestibulum nisl nulla sed ex. Orci varius natoque penatibus et magnis dis
+        parturient montes, nascetur ridiculus mus. Vivamus consequat id dolor quis feugiat.
+    </string>
+    <string name="genearate">GENEARATE</string>
+    <string name="generate_and_save">Generate And Save</string>
+</resources>
