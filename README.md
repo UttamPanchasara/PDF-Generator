@@ -1,0 +1,90 @@
+# PDF-Generator
+![Download](https://img.shields.io/badge/Download-1.0-blue.svg) ![Download](https://img.shields.io/badge/API-%2B21-brightgreen.svg)
+
+PDF Generator library, easy way to create PDF from String Content or Any HTML Content.
+
+## Get Started
+
+```gradle
+dependencies {
+     implementation 'com.uttampanchasara.pdfgenerator:pdfgenerator:1.0'
+}
+```
+
+## Quick Start
+In order start using PdfGenerator, Just copy below code to your project and just pass the required values and that's all you done!
+
+```kotlin
+ CreatePdf(this)
+            .setPdfName("FirstPdf")
+            .openPrintDialog(false)
+            .setContentBaseUrl(null)
+            .setContent("Your Content")
+            .setCallbackListener(object : CreatePdf.PdfCallbackListener {
+                override fun onFailure(errorMsg: String) {
+                    Toast.makeText(this@MainActivity, errorMsg, Toast.LENGTH_SHORT).show()
+                }
+
+                override fun onSuccess(filePath: String) {
+                    Toast.makeText(this@MainActivity, "Pdf Saved at: $filePath", Toast.LENGTH_SHORT).show()
+                }
+            })
+            .create()
+```
+
+## Usage
+
+- #### `setPdfName` : String
+Provide Your Pdf name, Library will use to save pdf with this name.
+
+
+- #### `openPrintDialog` : Boolean
+Default is `false`, If you set `true` it will send your pdf for print and open the android default pdf print view.
+
+
+- #### `setContentBaseUrl` : String
+If you are loading content from assets folder in that case you can pass your base url here, same as we passed in webview.
+
+
+- #### `setContent` : String
+Provide your String content, which you want to generate Pdf.
+
+
+- #### `setCallbackListener` : Listener Interface
+Set this callback listener to get callback on pdf generated.
+
+## Benefits
+- Easily Generate Pdf
+- No Extra codes
+- Time saving
+
+## More?
+If you have any suggestions or you can make this library better write me, create issue, or you can also write code and send pull request.
+
+## Questions?
+ 
+**Ping-Me on :**  [![Twitter](https://img.shields.io/badge/Twitter-%40UTM__Panchasara-blue.svg)](https://twitter.com/UTM_Panchasara)
+[![Facebook](https://img.shields.io/badge/Facebook-Uttam%20Panchasara-blue.svg)](https://www.facebook.com/UttamPanchasara94)
+
+
+<a href="https://stackoverflow.com/users/5719935/uttam-panchasara">
+<img src="https://stackoverflow.com/users/flair/5719935.png" width="208" height="58" alt="profile for Uttam Panchasara at Stack Overflow, Q&amp;A for professional and enthusiast programmers" title="profile for Uttam Panchasara at Stack Overflow, Q&amp;A for professional and enthusiast programmers">
+</a>
+
+## License
+
+```
+   Copyright 2018 Uttam Panchasara
+
+   Licensed under the Apache License, Version 2.0 (the "License");
+   you may not use this file except in compliance with the License.
+   You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+```
