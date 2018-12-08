@@ -12,7 +12,7 @@ dependencies {
 ```
 
 ## Quick Start
-In order start using PdfGenerator, Just copy below code to your project and just pass the required values and that's all you done!
+In order to start using PdfGenerator, Just copy below code to your project and just pass the required values and that's all you done!
 
 ```kotlin
  CreatePdf(this)
