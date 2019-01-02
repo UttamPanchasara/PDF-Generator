@@ -71,6 +71,11 @@ If you have any suggestions or you can make this library better write me, create
 <img src="https://stackoverflow.com/users/flair/5719935.png" width="208" height="58" alt="profile for Uttam Panchasara at Stack Overflow, Q&amp;A for professional and enthusiast programmers" title="profile for Uttam Panchasara at Stack Overflow, Q&amp;A for professional and enthusiast programmers">
 </a>
 
+
+# Donate
+> If you found this library helpful, consider buying me a cup of :coffee:
+- Google Pay **(panchasarauttam@okaxis)**
+
 ## License
 
 ```
