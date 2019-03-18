@@ -14,6 +14,8 @@ dependencies {
 ## Quick Start
 In order to start using PdfGenerator, Just copy below code to your project and just pass the required values and that's all you done!
 
+
+### Kotlin Code:
 ```kotlin
  CreatePdf(this)
             .setPdfName("FirstPdf")
@@ -32,6 +34,27 @@ In order to start using PdfGenerator, Just copy below code to your project and j
             .create()
 ```
 
+
+### Java Code:
+```java
+new CreatePdf(this)
+            .setPdfName("FirstPdf")
+            .openPrintDialog(false)
+            .setContentBaseUrl(null)
+            .setContent("Your Content")
+            .setCallbackListener(new CreatePdf.PdfCallbackListener() {
+                @Override
+                public void onFailure(@NotNull String s) {
+                    // handle error
+                }
+
+                @Override
+                public void onSuccess(@NotNull String s) {
+                    // do your stuff here
+                }
+            })
+            .create();
+```
 ## Usage
 
 - #### `setPdfName` : String
