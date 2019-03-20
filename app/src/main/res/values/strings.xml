@@ -37,6 +37,6 @@
         ligula magna egestas turpis, eget vestibulum nisl nulla sed ex. Orci varius natoque penatibus et magnis dis
         parturient montes, nascetur ridiculus mus. Vivamus consequat id dolor quis feugiat.
     </string>
-    <string name="genearate">GENEARATE</string>
-    <string name="generate_and_save">Generate And Save</string>
+    <string name="genearate">Generate</string>
+    <string name="generate_and_save">Generate And Print</string>
 </resources>

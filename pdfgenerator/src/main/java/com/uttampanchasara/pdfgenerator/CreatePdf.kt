@@ -21,11 +21,12 @@ open class CreatePdf(private val mContext: Context) {
     private var MimeType = "text/html"
     private var ENCODING = "utf-8"
 
-    private var mBaseURL: String? = null
-    private var mPdfName: String? = ""
+    private var mBaseURL: String? = ""
+    private var mPdfName: String = ""
     private var mCallbacks: PdfCallbackListener? = null
-    private var mContent: String? = ""
+    private var mContent: String = ""
     private var doPrint: Boolean = false
+    private var mPdfFilePath: String = ""
 
     /**
      * file will be saved as : pdfName
@@ -44,13 +45,18 @@ open class CreatePdf(private val mContext: Context) {
         return this
     }
 
-    fun setContent(@NotNull content: String?): CreatePdf {
+    fun setContent(@NotNull content: String): CreatePdf {
         this.mContent = content
         return this
     }
 
     fun openPrintDialog(doPrint: Boolean): CreatePdf {
         this.doPrint = doPrint
+        return this
+    }
+
+    fun setFilePath(pdfFilePath: String): CreatePdf {
+        this.mPdfFilePath = pdfFilePath
         return this
     }
 
@@ -61,23 +67,31 @@ open class CreatePdf(private val mContext: Context) {
 
     @SuppressLint("SetJavaScriptEnabled")
     fun create() {
-        var webView: WebView? = WebView(mContext)
-        if (mContent?.isNotEmpty()!!) {
+
+        if (mPdfName.isEmpty()) {
+            mCallbacks?.onFailure("Pdf name must not be empty.")
+            return
+        }
+
+        if (mContent.isNotEmpty()) {
+            var webView: WebView? = WebView(mContext)
             webView?.loadDataWithBaseURL(mBaseURL, mContent, MimeType, ENCODING, null)
             webView?.settings?.javaScriptEnabled = true
             webView?.clearCache(true)
             webView?.webViewClient = object : WebViewClient() {
                 override fun onPageFinished(view: WebView?, url: String?) {
                     // Get a print adapter instance
-                    val printAdapter = webView?.createPrintDocumentAdapter(mPdfName)!!
-
-                    if (doPrint) {
-                        // Get a PrintManager instance
-                        val printManager = mContext.getSystemService(Context.PRINT_SERVICE) as PrintManager
-                        // Create a print job with name and adapter instance
-                        printManager.print(mPdfName, printAdapter, PrintAttributes.Builder().build())
+                    val printAdapter = webView?.createPrintDocumentAdapter(mPdfName)
+                    printAdapter?.let {
+                        if (doPrint) {
+                            // Get a PrintManager instance
+                            val printManager = mContext.getSystemService(Context.PRINT_SERVICE) as PrintManager
+                            // Create a print job with name and adapter instance
+                            printManager.print(mPdfName, it, PrintAttributes.Builder().build())
+                        }
+                        savePdf(printAdapter)
                     }
-                    savePdf(printAdapter)
+
                     webView = null
                 }
             }
@@ -87,6 +101,20 @@ open class CreatePdf(private val mContext: Context) {
     }
 
     private fun savePdf(printAdapter: PrintDocumentAdapter) {
+        // user filePath provided by user, if not use default cache dir.
+        var filePath = ""
+        filePath = if (mPdfFilePath.isEmpty()) {
+            mContext.cacheDir.absolutePath
+        } else {
+            mPdfFilePath
+        }
+
+        // create dir if not exists
+        val file = File(filePath)
+        if (!file.exists()) {
+            file.mkdirs()
+        }
+
         //save pdf
         val printAttributes = PrintAttributes.Builder()
             .setMediaSize(PrintAttributes.MediaSize.ISO_A4)
@@ -96,15 +124,15 @@ open class CreatePdf(private val mContext: Context) {
 
         PdfPrint(printAttributes).print(
             printAdapter,
-            File(mContext.cacheDir?.absolutePath),
+            file,
             mPdfName,
             object : PdfPrint.CallbackPrint {
-                override fun success(path: String?) {
-                    mCallbacks?.onSuccess(path!!)
+                override fun success(path: String) {
+                    mCallbacks?.onSuccess(path)
                 }
 
-                override fun onFailure(errorMsg: String?) {
-                    mCallbacks?.onFailure(errorMsg!!)
+                override fun onFailure(errorMsg: String) {
+                    mCallbacks?.onFailure(errorMsg)
                 }
             })
     }

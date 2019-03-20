@@ -1,6 +1,7 @@
 package com.uttampanchasara.pdf
 
 import android.os.Bundle
+import android.os.Environment
 import android.support.v7.app.AppCompatActivity
 import android.widget.Toast
 import com.uttampanchasara.pdfgenerator.CreatePdf
@@ -38,8 +39,17 @@ class MainActivity : AppCompatActivity(), CreatePdf.PdfCallbackListener {
             .setPdfName("Sample")
             .openPrintDialog(openPrintDialog)
             .setContentBaseUrl(null)
+            .setFilePath(Environment.getExternalStorageDirectory().absolutePath + "/MyPdf")
             .setContent(getString(R.string.content))
-            .setCallbackListener(this)
+            .setCallbackListener(object : CreatePdf.PdfCallbackListener {
+                override fun onFailure(errorMsg: String) {
+                    Toast.makeText(this@MainActivity, errorMsg, Toast.LENGTH_SHORT).show()
+                }
+
+                override fun onSuccess(filePath: String) {
+                    Toast.makeText(this@MainActivity, "Pdf Saved at: $filePath", Toast.LENGTH_SHORT).show()
+                }
+            })
             .create()
     }
 }
