@@ -1,5 +1,5 @@
 # PDF-Generator
-![Download](https://img.shields.io/badge/Download-1.0-blue.svg) ![Download](https://img.shields.io/badge/API-%2B21-brightgreen.svg) [![Download](https://img.shields.io/badge/Android%20Arsenal-PDF%20Generator-red.svg)](https://android-arsenal.com/details/1/7355)
+![Download](https://img.shields.io/badge/Download-1.1-blue.svg) ![Download](https://img.shields.io/badge/API-%2B21-brightgreen.svg) [![Download](https://img.shields.io/badge/Android%20Arsenal-PDF%20Generator-red.svg)](https://android-arsenal.com/details/1/7355)
 
 PDF Generator library, easy way to create PDF from String Content or Any HTML Content.
 
@@ -7,7 +7,7 @@ PDF Generator library, easy way to create PDF from String Content or Any HTML Co
 
 ```gradle
 dependencies {
-     implementation 'com.uttampanchasara.pdfgenerator:pdfgenerator:1.0'
+     implementation 'com.uttampanchasara.pdfgenerator:pdfgenerator:1.1'
 }
 ```
 
@@ -22,6 +22,7 @@ In order to start using PdfGenerator, Just copy below code to your project and j
             .openPrintDialog(false)
             .setContentBaseUrl(null)
             .setContent("Your Content")
+            .setFilePath(Environment.getExternalStorageDirectory().absolutePath + "/MyPdf")
             .setCallbackListener(object : CreatePdf.PdfCallbackListener {
                 override fun onFailure(errorMsg: String) {
                     Toast.makeText(this@MainActivity, errorMsg, Toast.LENGTH_SHORT).show()
@@ -42,6 +43,7 @@ new CreatePdf(this)
             .openPrintDialog(false)
             .setContentBaseUrl(null)
             .setContent("Your Content")
+            .setFilePath(Environment.getExternalStorageDirectory().absolutePath + "/MyPdf")
             .setCallbackListener(new CreatePdf.PdfCallbackListener() {
                 @Override
                 public void onFailure(@NotNull String s) {
@@ -55,6 +57,9 @@ new CreatePdf(this)
             })
             .create();
 ```
+## NOTE: ( Provide STORAGE Permission if you are providing filePath to library )
+### In library, I'm not handling any storage permission related exception, If you are providing your custom filePath then your application must have STORAGE READ-WRITE Permission in order to store Pdf in provided path. 
+
 ## Usage
 
 - #### `setPdfName` : String
@@ -72,6 +77,9 @@ If you are loading content from assets folder in that case you can pass your bas
 - #### `setContent` : String
 Provide your String content, which you want to generate Pdf.
 
+
+- #### `setFilePath` : String
+Provide custom file path to save pdf in your own directory, default will be the cache directory of Application
 
 - #### `setCallbackListener` : Listener Interface
 Set this callback listener to get callback on pdf generated.
