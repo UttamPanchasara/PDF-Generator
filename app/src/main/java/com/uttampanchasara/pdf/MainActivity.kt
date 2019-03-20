@@ -12,6 +12,7 @@ class MainActivity : AppCompatActivity(), CreatePdf.PdfCallbackListener {
 
     override fun onSuccess(filePath: String) {
         Log.i("MainActivity", "Pdf Saved at: $filePath")
+
         Toast.makeText(this, "Pdf Saved at: $filePath", Toast.LENGTH_SHORT).show()
     }
 
