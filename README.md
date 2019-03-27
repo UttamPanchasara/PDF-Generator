@@ -88,6 +88,7 @@ Set this callback listener to get callback on pdf generated.
 - Easily Generate Pdf
 - No Extra codes
 - Time saving
+- Lightweight
 
 ## More?
 If you have any suggestions or you can make this library better write me, create issue, or you can also write code and send pull request.
@@ -110,7 +111,7 @@ If you have any suggestions or you can make this library better write me, create
 ## License
 
 ```
-   Copyright 2018 Uttam Panchasara
+   Copyright 2019 Uttam Panchasara
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
