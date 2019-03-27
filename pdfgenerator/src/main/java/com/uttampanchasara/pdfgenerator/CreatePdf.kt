@@ -27,6 +27,7 @@ open class CreatePdf(private val mContext: Context) {
     private var mContent: String = ""
     private var doPrint: Boolean = false
     private var mPdfFilePath: String = ""
+    private var mWebView: WebView? = null
 
     /**
      * file will be saved as : pdfName
@@ -74,25 +75,16 @@ open class CreatePdf(private val mContext: Context) {
         }
 
         if (mContent.isNotEmpty()) {
-            var webView: WebView? = WebView(mContext)
-            webView?.loadDataWithBaseURL(mBaseURL, mContent, MimeType, ENCODING, null)
-            webView?.settings?.javaScriptEnabled = true
-            webView?.clearCache(true)
-            webView?.webViewClient = object : WebViewClient() {
-                override fun onPageFinished(view: WebView?, url: String?) {
+            mWebView = WebView(mContext)
+            mWebView?.loadDataWithBaseURL(mBaseURL, mContent, MimeType, ENCODING, null)
+            mWebView?.settings?.javaScriptEnabled = true
+            mWebView?.clearCache(true)
+            mWebView?.webViewClient = object : WebViewClient() {
+                override fun onPageFinished(view: WebView, url: String?) {
                     // Get a print adapter instance
-                    val printAdapter = webView?.createPrintDocumentAdapter(mPdfName)
-                    printAdapter?.let {
-                        if (doPrint) {
-                            // Get a PrintManager instance
-                            val printManager = mContext.getSystemService(Context.PRINT_SERVICE) as PrintManager
-                            // Create a print job with name and adapter instance
-                            printManager.print(mPdfName, it, PrintAttributes.Builder().build())
-                        }
-                        savePdf(printAdapter)
-                    }
-
-                    webView = null
+                    val printAdapter: PrintDocumentAdapter = view.createPrintDocumentAdapter(mPdfName)
+                    // generate pdf from adapter
+                    savePdf(printAdapter)
                 }
             }
         } else {
@@ -129,10 +121,20 @@ open class CreatePdf(private val mContext: Context) {
             object : PdfPrint.CallbackPrint {
                 override fun success(path: String) {
                     mCallbacks?.onSuccess(path)
+
+                    // if true, open print job dialog
+                    if (doPrint) {
+                        // Get a PrintManager instance
+                        val printManager = mContext.getSystemService(Context.PRINT_SERVICE) as PrintManager
+                        // Create a print job with name and adapter instance
+                        printManager.print(mPdfName, printAdapter, PrintAttributes.Builder().build())
+                    }
+                    mWebView = null
                 }
 
                 override fun onFailure(errorMsg: String) {
                     mCallbacks?.onFailure(errorMsg)
+                    mWebView = null
                 }
             })
     }
