@@ -1,5 +1,5 @@
 # PDF-Generator
-![Download](https://img.shields.io/badge/Download-1.1-blue.svg) ![Download](https://img.shields.io/badge/API-%2B21-brightgreen.svg) [![Download](https://img.shields.io/badge/Android%20Arsenal-PDF%20Generator-red.svg)](https://android-arsenal.com/details/1/7355)
+![Download](https://img.shields.io/badge/Download-1.2-blue.svg) ![Download](https://img.shields.io/badge/API-%2B21-brightgreen.svg) [![Download](https://img.shields.io/badge/Android%20Arsenal-PDF%20Generator-red.svg)](https://android-arsenal.com/details/1/7355)
 
 PDF Generator library, easy way to create PDF from String Content or Any HTML Content.
 
@@ -7,7 +7,7 @@ PDF Generator library, easy way to create PDF from String Content or Any HTML Co
 
 ```gradle
 dependencies {
-     implementation 'com.uttampanchasara.pdfgenerator:pdfgenerator:1.1'
+     implementation 'com.uttampanchasara.pdfgenerator:pdfgenerator:1.2'
 }
 ```
 
