@@ -1,5 +1,5 @@
 # PDF-Generator
-![Download](https://img.shields.io/badge/Download-1.2-blue.svg) ![Download](https://img.shields.io/badge/API-%2B21-brightgreen.svg) [![Download](https://img.shields.io/badge/Android%20Arsenal-PDF%20Generator-red.svg)](https://android-arsenal.com/details/1/7355)
+![Download](https://img.shields.io/badge/Download-1.3-blue.svg) ![Download](https://img.shields.io/badge/API-%2B21-brightgreen.svg) [![Download](https://img.shields.io/badge/Android%20Arsenal-PDF%20Generator-red.svg)](https://android-arsenal.com/details/1/7355)
 
 PDF Generator library, easy way to create PDF from String Content or Any HTML Content.
 
@@ -7,7 +7,7 @@ PDF Generator library, easy way to create PDF from String Content or Any HTML Co
 
 ```gradle
 dependencies {
-     implementation 'com.uttampanchasara.pdfgenerator:pdfgenerator:1.2'
+     implementation 'com.uttampanchasara.pdfgenerator:pdfgenerator:1.3'
 }
 ```
 
@@ -21,6 +21,7 @@ In order to start using PdfGenerator, Just copy below code to your project and j
             .setPdfName("FirstPdf")
             .openPrintDialog(false)
             .setContentBaseUrl(null)
+            .setPageSize(PrintAttributes.MediaSize.ISO_A4)
             .setContent("Your Content")
             .setFilePath(Environment.getExternalStorageDirectory().absolutePath + "/MyPdf")
             .setCallbackListener(object : CreatePdf.PdfCallbackListener {
@@ -42,6 +43,7 @@ new CreatePdf(this)
             .setPdfName("FirstPdf")
             .openPrintDialog(false)
             .setContentBaseUrl(null)
+            .setPageSize(PrintAttributes.MediaSize.ISO_A4)
             .setContent("Your Content")
             .setFilePath(Environment.getExternalStorageDirectory().absolutePath + "/MyPdf")
             .setCallbackListener(new CreatePdf.PdfCallbackListener() {
@@ -73,10 +75,11 @@ Default is `false`, If you set `true` it will send your pdf for print and open t
 - #### `setContentBaseUrl` : String
 If you are loading content from assets folder in that case you can pass your base url here, same as we passed in webview.
 
+- #### `setPageSize` : String
+To set custom page size for your pdf, you will have to pass the mediaSize as argument like for A4 size: PrintAttributes.MediaSize.ISO_A4
 
 - #### `setContent` : String
 Provide your String content, which you want to generate Pdf.
-
 
 - #### `setFilePath` : String
 Provide custom file path to save pdf in your own directory, default will be the cache directory of Application
