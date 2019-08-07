@@ -75,8 +75,9 @@ Default is `false`, If you set `true` it will send your pdf for print and open t
 - #### `setContentBaseUrl` : String
 If you are loading content from assets folder in that case you can pass your base url here, same as we passed in webview.
 
-- #### `setPageSize` : String
-To set custom page size for your pdf, you will have to pass the mediaSize as argument like for A4 size: PrintAttributes.MediaSize.ISO_A4
+- #### `setPageSize` : PrintAttributes.MediaSize
+To set custom page size for your pdf, you will have to pass the mediaSize as argument. 
+Example - For A4 size: PrintAttributes.MediaSize.ISO_A4 | ISO_A0 | ISO_A1
 
 - #### `setContent` : String
 Provide your String content, which you want to generate Pdf.
