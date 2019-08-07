@@ -28,6 +28,7 @@ open class CreatePdf(private val mContext: Context) {
     private var doPrint: Boolean = false
     private var mPdfFilePath: String = ""
     private var mWebView: WebView? = null
+    private var mMediaSize: PrintAttributes.MediaSize? = null
 
     /**
      * file will be saved as : pdfName
@@ -61,6 +62,11 @@ open class CreatePdf(private val mContext: Context) {
         return this
     }
 
+    fun setPageSize(@NotNull size: PrintAttributes.MediaSize): CreatePdf {
+        this.mMediaSize = size
+        return this
+    }
+
     fun setCallbackListener(@NotNull callbacks: PdfCallbackListener): CreatePdf {
         this.mCallbacks = callbacks
         return this
@@ -74,21 +80,27 @@ open class CreatePdf(private val mContext: Context) {
             return
         }
 
-        if (mContent.isNotEmpty()) {
-            mWebView = WebView(mContext)
-            mWebView?.loadDataWithBaseURL(mBaseURL, mContent, MimeType, ENCODING, null)
-            mWebView?.settings?.javaScriptEnabled = true
-            mWebView?.clearCache(true)
-            mWebView?.webViewClient = object : WebViewClient() {
-                override fun onPageFinished(view: WebView, url: String?) {
-                    // Get a print adapter instance
-                    val printAdapter: PrintDocumentAdapter = view.createPrintDocumentAdapter(mPdfName)
-                    // generate pdf from adapter
-                    savePdf(printAdapter)
-                }
+        if (mMediaSize == null) {
+            mCallbacks?.onFailure("Page Size must not be empty.")
+            return
+        }
+
+        if (mContent.isEmpty()) {
+            mCallbacks?.onFailure("Empty or null content.")
+            return
+        }
+
+        mWebView = WebView(mContext)
+        mWebView?.loadDataWithBaseURL(mBaseURL, mContent, MimeType, ENCODING, null)
+        mWebView?.settings?.javaScriptEnabled = true
+        mWebView?.clearCache(true)
+        mWebView?.webViewClient = object : WebViewClient() {
+            override fun onPageFinished(view: WebView, url: String?) {
+                // Get a print adapter instance
+                val printAdapter: PrintDocumentAdapter = view.createPrintDocumentAdapter(mPdfName)
+                // generate pdf from adapter
+                savePdf(printAdapter)
             }
-        } else {
-            mCallbacks?.onFailure("Empty or null content")
         }
     }
 
@@ -109,7 +121,7 @@ open class CreatePdf(private val mContext: Context) {
 
         //save pdf
         val printAttributes = PrintAttributes.Builder()
-            .setMediaSize(PrintAttributes.MediaSize.ISO_A4)
+            .setMediaSize(mMediaSize!!)
             .setResolution(PrintAttributes.Resolution("pdf", "pdf", 600, 600))
             .setMinMargins(PrintAttributes.Margins.NO_MARGINS)
             .build()
