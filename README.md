@@ -46,7 +46,7 @@ new CreatePdf(this)
             .setContentBaseUrl(null)
             .setPageSize(PrintAttributes.MediaSize.ISO_A4)
             .setContent("Your Content")
-            .setFilePath(Environment.getExternalStorageDirectory().absolutePath + "/MyPdf")
+            .setFilePath(Environment.getExternalStorageDirectory().getAbsolutePath() + "/MyPdf")
             .setCallbackListener(new CreatePdf.PdfCallbackListener() {
                 @Override
                 public void onFailure(@NotNull String s) {
