@@ -112,7 +112,7 @@ If you have any suggestions or you can make this library better write me, create
 
 # Donate
 > If you found this library helpful, consider buying me a cup of :coffee:
-- Google Pay **(panchasarauttam@okaxis)**
+- Paypal **https://paypal.me/UttamPanchasara**
 
 ## Stargazers over time
 [![Stargazers over time](https://starchart.cc/UttamPanchasara/PDF-Generator.svg)](https://starchart.cc/UttamPanchasara/PDF-Generator)
