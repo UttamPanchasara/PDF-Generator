@@ -1,13 +1,15 @@
 package com.uttampanchasara.pdf
 
+import android.Manifest
 import android.os.Bundle
 import android.os.Environment
 import android.print.PrintAttributes
+import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
+import android.widget.Button
 import android.widget.Toast
 import com.uttampanchasara.pdfgenerator.CreatePdf
-import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity(), CreatePdf.PdfCallbackListener {
 
@@ -27,9 +29,11 @@ class MainActivity : AppCompatActivity(), CreatePdf.PdfCallbackListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        val btnPrint = findViewById<Button>(R.id.btnPrint)
+        val btnPrintAndSave = findViewById<Button>(R.id.btnPrintAndSave)
         btnPrint.setOnClickListener {
             openPrintDialog = false
-            doPrint()
+           doPrint()
         }
 
         btnPrintAndSave.setOnClickListener {
@@ -44,7 +48,7 @@ class MainActivity : AppCompatActivity(), CreatePdf.PdfCallbackListener {
             .openPrintDialog(openPrintDialog)
             .setContentBaseUrl(null)
             .setPageSize(PrintAttributes.MediaSize.ISO_A4)
-            .setFilePath(Environment.getExternalStorageDirectory().absolutePath + "/MyPdf")
+            .setFilePath("MyPdf")
             .setContent(getString(R.string.content))
             .setCallbackListener(object : CreatePdf.PdfCallbackListener {
                 override fun onFailure(errorMsg: String) {

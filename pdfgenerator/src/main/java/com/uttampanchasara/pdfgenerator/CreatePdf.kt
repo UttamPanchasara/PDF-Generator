@@ -58,7 +58,7 @@ open class CreatePdf(private val mContext: Context) {
     }
 
     fun setFilePath(pdfFilePath: String): CreatePdf {
-        this.mPdfFilePath = pdfFilePath
+        this.mPdfFilePath = mContext.getExternalFilesDir(null)!!.absolutePath + "/" + pdfFilePath
         return this
     }
 
@@ -137,9 +137,14 @@ open class CreatePdf(private val mContext: Context) {
                     // if true, open print job dialog
                     if (doPrint) {
                         // Get a PrintManager instance
-                        val printManager = mContext.getSystemService(Context.PRINT_SERVICE) as PrintManager
+                        val printManager =
+                            mContext.getSystemService(Context.PRINT_SERVICE) as PrintManager
                         // Create a print job with name and adapter instance
-                        printManager.print(mPdfName, printAdapter, PrintAttributes.Builder().build())
+                        printManager.print(
+                            mPdfName,
+                            printAdapter,
+                            PrintAttributes.Builder().build()
+                        )
                     }
                     mWebView = null
                 }

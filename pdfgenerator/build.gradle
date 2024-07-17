@@ -1,23 +1,21 @@
-apply plugin: 'com.novoda.bintray-release'
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
-apply plugin: 'kotlin-android-extensions'
 
-publish {
-    userOrg = 'uttam'
-    groupId = 'com.uttampanchasara.pdfgenerator'
-    artifactId = 'pdfgenerator'
-    publishVersion = '1.3'
-    desc = 'This is a pdf generator library'
-    website = 'https://github.com/UttamPanchasara/PDF-Generator'
-}
+//publish {
+//    userOrg = 'uttam'
+//    groupId = 'com.uttampanchasara.pdfgenerator'
+//    artifactId = 'pdfgenerator'
+//    publishVersion = '1.3'
+//    desc = 'This is a pdf generator library'
+//    website = 'https://github.com/UttamPanchasara/PDF-Generator'
+//}
 
 android {
-    compileSdkVersion 28
+    compileSdk 34
     defaultConfig {
-        minSdkVersion 21
-        targetSdkVersion 28
+        minSdk 23
+        targetSdk 34
         versionCode 4
         versionName "1.3"
 
@@ -31,6 +29,7 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    namespace 'com.uttampanchasara.pdfgenerator'
 }
 
 dependencies {
