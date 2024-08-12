@@ -48,7 +48,7 @@ class MainActivity : AppCompatActivity(), CreatePdf.PdfCallbackListener {
             .openPrintDialog(openPrintDialog)
             .setContentBaseUrl(null)
             .setPageSize(PrintAttributes.MediaSize.ISO_A4)
-            .setFilePath(getExternalFilesDir(null)!!.absolutePath + "/MyPdf")
+            .setFilePath(Environment.getExternalStorageDirectory().absolutePath + "/MyPdf")
             .setContent(getString(R.string.content))
             .setCallbackListener(object : CreatePdf.PdfCallbackListener {
                 override fun onFailure(errorMsg: String) {
