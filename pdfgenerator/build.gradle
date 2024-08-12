@@ -1,15 +1,16 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
+apply plugin: 'kotlin-android-extensions'
 
-//publish {
-//    userOrg = 'uttam'
-//    groupId = 'com.uttampanchasara.pdfgenerator'
-//    artifactId = 'pdfgenerator'
-//    publishVersion = '1.3'
-//    desc = 'This is a pdf generator library'
-//    website = 'https://github.com/UttamPanchasara/PDF-Generator'
-//}
+publish {
+    userOrg = 'uttam'
+    groupId = 'com.uttampanchasara.pdfgenerator'
+    artifactId = 'pdfgenerator'
+    publishVersion = '1.3'
+    desc = 'This is a pdf generator library'
+    website = 'https://github.com/UttamPanchasara/PDF-Generator'
+}
 
 android {
     compileSdk 34
