@@ -58,7 +58,7 @@ open class CreatePdf(private val mContext: Context) {
     }
 
     fun setFilePath(pdfFilePath: String): CreatePdf {
-        this.mPdfFilePath = mContext.getExternalFilesDir(null)!!.absolutePath + "/" + pdfFilePath
+        this.mPdfFilePath = pdfFilePath
         return this
     }
 
