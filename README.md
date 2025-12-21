@@ -209,7 +209,7 @@ For **URL loading**, add to `AndroidManifest.xml`:
 ## License
 
 ```
-Copyright 2019-2024 Uttam Panchasara
+Copyright 2019-2025 Uttam Panchasara
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
