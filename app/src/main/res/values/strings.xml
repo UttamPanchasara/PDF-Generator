@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">PDF</string>
+    <string name="app_name">PDF Generator</string>
     <string name="content">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer laoreet sapien et tempor
         volutpat. Nunc ornare, velit ac scelerisque bibendum, ipsum nulla molestie ipsum, id dictum nulla nisl ut est.
         Proin dapibus ut felis nec congue. Orci varius natoque penatibus et magnis dis parturient montes, nascetur
@@ -37,6 +37,6 @@
         ligula magna egestas turpis, eget vestibulum nisl nulla sed ex. Orci varius natoque penatibus et magnis dis
         parturient montes, nascetur ridiculus mus. Vivamus consequat id dolor quis feugiat.
     </string>
-    <string name="genearate">Generate</string>
-    <string name="generate_and_save">Generate And Print</string>
+    <string name="generate">Generate PDF</string>
+    <string name="generate_and_print">Generate &amp; Print</string>
 </resources>

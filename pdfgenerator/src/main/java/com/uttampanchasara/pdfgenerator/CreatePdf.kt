@@ -8,15 +8,29 @@ import android.print.PrintDocumentAdapter
 import android.print.PrintManager
 import android.webkit.WebView
 import android.webkit.WebViewClient
-import org.jetbrains.annotations.NotNull
-import org.jetbrains.annotations.Nullable
 import java.io.File
 
-
 /**
+ * PDF Generator Library
  * @since 11/30/2018
+ * @version 2.0
  */
 open class CreatePdf(private val mContext: Context) {
+
+    companion object {
+        /**
+         * Helper to get a modern storage path that works on Android 10+
+         * Uses app-specific external files directory which doesn't require permissions
+         */
+        @JvmStatic
+        fun getDefaultSavePath(context: Context, subdirectory: String = "PDF"): String {
+            val dir = File(context.getExternalFilesDir(null), subdirectory)
+            if (!dir.exists()) {
+                dir.mkdirs()
+            }
+            return dir.absolutePath
+        }
+    }
 
     private var MimeType = "text/html"
     private var ENCODING = "utf-8"
@@ -34,7 +48,7 @@ open class CreatePdf(private val mContext: Context) {
      * file will be saved as : pdfName
      *
      **/
-    fun setPdfName(@NotNull pdfName: String): CreatePdf {
+    fun setPdfName(pdfName: String): CreatePdf {
         this.mPdfName = "$pdfName.pdf"
         return this
     }
@@ -42,12 +56,12 @@ open class CreatePdf(private val mContext: Context) {
     /**
      * if content going to be load from assets or from other source
      */
-    fun setContentBaseUrl(@Nullable baseUrl: String?): CreatePdf {
+    fun setContentBaseUrl(baseUrl: String?): CreatePdf {
         this.mBaseURL = baseUrl
         return this
     }
 
-    fun setContent(@NotNull content: String): CreatePdf {
+    fun setContent(content: String): CreatePdf {
         this.mContent = content
         return this
     }
@@ -62,12 +76,12 @@ open class CreatePdf(private val mContext: Context) {
         return this
     }
 
-    fun setPageSize(@NotNull size: PrintAttributes.MediaSize): CreatePdf {
+    fun setPageSize(size: PrintAttributes.MediaSize): CreatePdf {
         this.mMediaSize = size
         return this
     }
 
-    fun setCallbackListener(@NotNull callbacks: PdfCallbackListener): CreatePdf {
+    fun setCallbackListener(callbacks: PdfCallbackListener): CreatePdf {
         this.mCallbacks = callbacks
         return this
     }

@@ -1,6 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#008577</color>
-    <color name="colorPrimaryDark">#00574B</color>
-    <color name="colorAccent">#D81B60</color>
+    <!-- Material 3 Color Scheme - Teal primary color scheme -->
+    <color name="md_theme_primary">#006A60</color>
+    <color name="md_theme_onPrimary">#FFFFFF</color>
+    <color name="md_theme_primaryContainer">#74F8E5</color>
+    <color name="md_theme_onPrimaryContainer">#00201C</color>
+
+    <color name="md_theme_secondary">#4A635F</color>
+    <color name="md_theme_onSecondary">#FFFFFF</color>
+    <color name="md_theme_secondaryContainer">#CCE8E2</color>
+    <color name="md_theme_onSecondaryContainer">#06201C</color>
+
+    <color name="md_theme_tertiary">#456179</color>
+    <color name="md_theme_onTertiary">#FFFFFF</color>
+
+    <color name="md_theme_error">#BA1A1A</color>
+    <color name="md_theme_onError">#FFFFFF</color>
+
+    <color name="md_theme_background">#FAFDFA</color>
+    <color name="md_theme_onBackground">#191C1B</color>
+    <color name="md_theme_surface">#FAFDFA</color>
+    <color name="md_theme_onSurface">#191C1B</color>
+    <color name="md_theme_surfaceVariant">#DAE5E1</color>
+    <color name="md_theme_onSurfaceVariant">#3F4946</color>
+
+    <color name="md_theme_outline">#6F7976</color>
 </resources>

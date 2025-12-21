@@ -1,143 +1,152 @@
 # PDF-Generator
-![Download](https://img.shields.io/badge/Download-1.3-blue.svg) ![Download](https://img.shields.io/badge/API-%2B21-brightgreen.svg) [![Download](https://img.shields.io/badge/Android%20Arsenal-PDF%20Generator-red.svg)](https://android-arsenal.com/details/1/7355)
-[![Download](https://img.shields.io/badge/%40-MindOrks-orange)](https://mindorks.com/android/store/PDF/uttampanchasara/pdf-generator)
 
-PDF Generator library, easy way to create PDF from String Content or Any HTML Content.
+![Version](https://img.shields.io/badge/Version-2.0.0-blue.svg) ![API](https://img.shields.io/badge/API-26%2B-brightgreen.svg) [![](https://jitpack.io/v/UttamPanchasara/PDF-Generator.svg)](https://jitpack.io/#UttamPanchasara/PDF-Generator)
 
-# Attention!
+PDF Generator library - Easy way to create PDF from String Content or HTML Content.
+
+## Installation
+
+Add JitPack repository to your root `settings.gradle`:
+
+```groovy
+dependencyResolutionManagement {
+    repositories {
+        google()
+        mavenCentral()
+        maven { url 'https://jitpack.io' }
+    }
+}
 ```
-// Not getting much time to maintain this code, there might be some issues with latest Android SDK.
-// If you're facing any please take pull and resolve offline for your case or raise the PR for others.
-// Thanks.
-```
 
-## Get Started
+Add the dependency to your app's `build.gradle`:
 
-```gradle
+```groovy
 dependencies {
-     implementation 'com.uttampanchasara.pdfgenerator:pdfgenerator:1.3'
+    implementation 'com.github.UttamPanchasara:PDF-Generator:2.0.0'
 }
 ```
 
 ## Quick Start
-In order to start using PdfGenerator, Just copy below code to your project and just pass the required values and that's all you done!
 
+### Kotlin
 
-### Kotlin Code:
 ```kotlin
- CreatePdf(this)
-            .setPdfName("FirstPdf")
-            .openPrintDialog(false)
-            .setContentBaseUrl(null)
-            .setPageSize(PrintAttributes.MediaSize.ISO_A4)
-            .setContent("Your Content")
-            .setFilePath(Environment.getExternalStorageDirectory().absolutePath + "/MyPdf")
-            .setCallbackListener(object : CreatePdf.PdfCallbackListener {
-                override fun onFailure(errorMsg: String) {
-                    Toast.makeText(this@MainActivity, errorMsg, Toast.LENGTH_SHORT).show()
-                }
+// Use app-specific storage (recommended, no permissions needed)
+val savePath = CreatePdf.getDefaultSavePath(context, "MyPDFs")
 
-                override fun onSuccess(filePath: String) {
-                    Toast.makeText(this@MainActivity, "Pdf Saved at: $filePath", Toast.LENGTH_SHORT).show()
-                }
-            })
-            .create()
+CreatePdf(context)
+    .setPdfName("FirstPdf")
+    .openPrintDialog(false)
+    .setContentBaseUrl(null)
+    .setPageSize(PrintAttributes.MediaSize.ISO_A4)
+    .setFilePath(savePath)
+    .setContent("<html><body><h1>Hello World</h1></body></html>")
+    .setCallbackListener(object : CreatePdf.PdfCallbackListener {
+        override fun onFailure(errorMsg: String) {
+            // Handle error
+        }
+
+        override fun onSuccess(filePath: String) {
+            // PDF created successfully at filePath
+        }
+    })
+    .create()
 ```
 
+### Java
 
-### Java Code:
 ```java
-new CreatePdf(this)
-            .setPdfName("FirstPdf")
-            .openPrintDialog(false)
-            .setContentBaseUrl(null)
-            .setPageSize(PrintAttributes.MediaSize.ISO_A4)
-            .setContent("Your Content")
-            .setFilePath(Environment.getExternalStorageDirectory().getAbsolutePath() + "/MyPdf")
-            .setCallbackListener(new CreatePdf.PdfCallbackListener() {
-                @Override
-                public void onFailure(@NotNull String s) {
-                    // handle error
-                }
+// Use app-specific storage (recommended, no permissions needed)
+String savePath = CreatePdf.getDefaultSavePath(context, "MyPDFs");
 
-                @Override
-                public void onSuccess(@NotNull String s) {
-                    // do your stuff here
-                }
-            })
-            .create();
+new CreatePdf(context)
+    .setPdfName("FirstPdf")
+    .openPrintDialog(false)
+    .setContentBaseUrl(null)
+    .setPageSize(PrintAttributes.MediaSize.ISO_A4)
+    .setFilePath(savePath)
+    .setContent("<html><body><h1>Hello World</h1></body></html>")
+    .setCallbackListener(new CreatePdf.PdfCallbackListener() {
+        @Override
+        public void onFailure(@NotNull String errorMsg) {
+            // Handle error
+        }
+
+        @Override
+        public void onSuccess(@NotNull String filePath) {
+            // PDF created successfully at filePath
+        }
+    })
+    .create();
 ```
-## NOTE: ( Provide STORAGE Permission if you are providing filePath to library )
-### In library, I'm not handling any storage permission related exception, If you are providing your custom filePath then your application must have STORAGE READ-WRITE Permission in order to store Pdf in provided path. 
 
-## Usage
+## API Reference
 
-- #### `setPdfName` : String
-Provide Your Pdf name, Library will use to save pdf with this name.
+| Method | Type | Description |
+|--------|------|-------------|
+| `setPdfName` | String | Name for the PDF file (without extension) |
+| `openPrintDialog` | Boolean | If `true`, opens Android print dialog after PDF creation |
+| `setContentBaseUrl` | String? | Base URL for loading assets (same as WebView baseUrl) |
+| `setPageSize` | PrintAttributes.MediaSize | Page size (e.g., `ISO_A4`, `ISO_A3`, `NA_LETTER`) |
+| `setContent` | String | HTML or text content to convert to PDF |
+| `setFilePath` | String | Directory path to save the PDF |
+| `setCallbackListener` | PdfCallbackListener | Callback for success/failure notifications |
 
+### Helper Methods
 
-- #### `openPrintDialog` : Boolean
-Default is `false`, If you set `true` it will send your pdf for print and open the android default pdf print view.
+| Method | Description |
+|--------|-------------|
+| `CreatePdf.getDefaultSavePath(context, subdirectory)` | Returns app-specific storage path (no permissions needed) |
 
+## Storage
 
-- #### `setContentBaseUrl` : String
-If you are loading content from assets folder in that case you can pass your base url here, same as we passed in webview.
+Starting with version 2.0, the library uses app-specific storage by default, which doesn't require any storage permissions. Use `CreatePdf.getDefaultSavePath()` to get a safe storage path.
 
-- #### `setPageSize` : PrintAttributes.MediaSize
-To set custom page size for your pdf, you will have to pass the mediaSize as argument. 
+If you need to save to a custom location, ensure your app has the appropriate permissions.
 
-Example - For A4 size: `PrintAttributes.MediaSize.ISO_A4 | ISO_A0 | ISO_A1`
+## Requirements
 
-- #### `setContent` : String
-Provide your String content, which you want to generate Pdf.
+- **Minimum SDK**: 26 (Android 8.0)
+- **Compile SDK**: 35 (Android 15)
+- **Kotlin**: 2.0+
 
-- #### `setFilePath` : String
-Provide custom file path to save pdf in your own directory, default will be the cache directory of Application
+## Migration from v1.x
 
-- #### `setCallbackListener` : Listener Interface
-Set this callback listener to get callback on pdf generated.
-
-## Benefits
-- Easily Generate Pdf
-- No Extra codes
-- Time saving
-- Lightweight
-
-## More?
-If you have any suggestions or you can make this library better write me, create issue, or you can also write code and send pull request.
+1. Update the dependency to use JitPack
+2. Replace `Environment.getExternalStorageDirectory()` with `CreatePdf.getDefaultSavePath()`
+3. Remove storage permissions if using app-specific storage
 
 ## Questions?
- 
-**Ping-Me on :**  [![Twitter](https://img.shields.io/badge/Twitter-%40UTM__Panchasara-blue.svg)](https://twitter.com/UTM_Panchasara)
-[![Facebook](https://img.shields.io/badge/Facebook-Uttam%20Panchasara-blue.svg)](https://www.facebook.com/UttamPanchasara94)
 
+**Ping me on:** [![Twitter](https://img.shields.io/badge/Twitter-%40UTM__Panchasara-blue.svg)](https://twitter.com/UTM_Panchasara) [![Facebook](https://img.shields.io/badge/Facebook-Uttam%20Panchasara-blue.svg)](https://www.facebook.com/UttamPanchasara94)
 
 <a href="https://stackoverflow.com/users/5719935/uttam-panchasara">
 <img src="https://stackoverflow.com/users/flair/5719935.png" width="208" height="58" alt="profile for Uttam Panchasara at Stack Overflow, Q&amp;A for professional and enthusiast programmers" title="profile for Uttam Panchasara at Stack Overflow, Q&amp;A for professional and enthusiast programmers">
 </a>
 
+## Donate
 
-# Donate
 > If you found this library helpful, consider buying me a cup of :coffee:
-- Paypal **https://paypal.me/UttamPanchasara**
+- PayPal **https://paypal.me/UttamPanchasara**
 
 ## Stargazers over time
+
 [![Stargazers over time](https://starchart.cc/UttamPanchasara/PDF-Generator.svg)](https://starchart.cc/UttamPanchasara/PDF-Generator)
 
 ## License
 
 ```
-   Copyright 2019 Uttam Panchasara
+Copyright 2019-2024 Uttam Panchasara
 
-   Licensed under the Apache License, Version 2.0 (the "License");
-   you may not use this file except in compliance with the License.
-   You may obtain a copy of the License at
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
 
-     http://www.apache.org/licenses/LICENSE-2.0
+  http://www.apache.org/licenses/LICENSE-2.0
 
-   Unless required by applicable law or agreed to in writing, software
-   distributed under the License is distributed on an "AS IS" BASIS,
-   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-   See the License for the specific language governing permissions and
-   limitations under the License.
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
 ```
