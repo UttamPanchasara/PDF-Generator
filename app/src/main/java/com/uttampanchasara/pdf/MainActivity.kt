@@ -1,7 +1,6 @@
 package com.uttampanchasara.pdf
 
 import android.os.Bundle
-import android.print.PrintAttributes
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.snackbar.Snackbar
@@ -11,68 +10,38 @@ import com.uttampanchasara.pdfgenerator.CreatePdf
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
-    private var openPrintDialog: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        setupUI()
+        binding.btnGenerate.setOnClickListener { generatePdf(showPrintDialog = false) }
+        binding.btnGenerateAndPrint.setOnClickListener { generatePdf(showPrintDialog = true) }
     }
 
-    private fun setupUI() {
-        binding.btnGenerate.setOnClickListener {
-            openPrintDialog = false
-            generatePdf()
-        }
-
-        binding.btnGenerateAndPrint.setOnClickListener {
-            openPrintDialog = true
-            generatePdf()
-        }
-    }
-
-    private fun generatePdf() {
-        // Use modern app-specific storage path (no permissions needed)
-        val savePath = CreatePdf.getDefaultSavePath(this, "MyPdf")
-
+    private fun generatePdf(showPrintDialog: Boolean) {
         CreatePdf(this)
             .setPdfName("Sample")
-            .openPrintDialog(openPrintDialog)
-            .setContentBaseUrl(null)
-            .setPageSize(PrintAttributes.MediaSize.ISO_A4)
-            .setFilePath(savePath)
+            .setFilePath(CreatePdf.getDefaultSavePath(this, "MyPdf"))
             .setContent(getString(R.string.content))
+            .openPrintDialog(showPrintDialog)
             .setCallbackListener(object : CreatePdf.PdfCallbackListener {
-                override fun onFailure(errorMsg: String) {
-                    showError(errorMsg)
+                override fun onSuccess(filePath: String) {
+                    Log.i(TAG, "PDF saved at: $filePath")
+                    showSnackbar("PDF saved successfully!")
                 }
 
-                override fun onSuccess(filePath: String) {
-                    showSuccess(filePath)
+                override fun onFailure(errorMsg: String) {
+                    Log.e(TAG, "PDF generation failed: $errorMsg")
+                    showSnackbar("Error: $errorMsg")
                 }
             })
             .create()
     }
 
-    private fun showSuccess(filePath: String) {
-        Log.i(TAG, "PDF saved at: $filePath")
-        Snackbar.make(
-            binding.root,
-            "PDF saved successfully!",
-            Snackbar.LENGTH_LONG
-        ).show()
-    }
-
-    private fun showError(errorMsg: String) {
-        Log.e(TAG, "PDF generation failed: $errorMsg")
-        Snackbar.make(
-            binding.root,
-            "Error: $errorMsg",
-            Snackbar.LENGTH_LONG
-        ).show()
+    private fun showSnackbar(message: String) {
+        Snackbar.make(binding.root, message, Snackbar.LENGTH_LONG).show()
     }
 
     companion object {

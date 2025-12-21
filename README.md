@@ -2,7 +2,16 @@
 
 ![Version](https://img.shields.io/badge/Version-2.0.0-blue.svg) ![API](https://img.shields.io/badge/API-26%2B-brightgreen.svg) [![](https://jitpack.io/v/UttamPanchasara/PDF-Generator.svg)](https://jitpack.io/#UttamPanchasara/PDF-Generator)
 
-PDF Generator library - Easy way to create PDF from String Content or HTML Content.
+PDF Generator library - Easy way to create PDF from HTML content, URLs, or Asset files.
+
+## Features
+
+- Generate PDF from **HTML content**, **URLs**, or **Asset files**
+- **Kotlin Coroutines** support with `createAsync()`
+- Customizable **page size**, **margins**, **resolution**, and **orientation**
+- Built-in **timeout handling** to prevent hanging
+- Modern **scoped storage** support (no permissions needed)
+- Proper **memory management** and error handling
 
 ## Installation
 
@@ -28,81 +37,135 @@ dependencies {
 
 ## Quick Start
 
-### Kotlin
+### Basic Usage (Kotlin)
 
 ```kotlin
-// Use app-specific storage (recommended, no permissions needed)
 val savePath = CreatePdf.getDefaultSavePath(context, "MyPDFs")
 
 CreatePdf(context)
-    .setPdfName("FirstPdf")
-    .openPrintDialog(false)
-    .setContentBaseUrl(null)
-    .setPageSize(PrintAttributes.MediaSize.ISO_A4)
-    .setFilePath(savePath)
+    .setPdfName("document")
     .setContent("<html><body><h1>Hello World</h1></body></html>")
+    .setFilePath(savePath)
     .setCallbackListener(object : CreatePdf.PdfCallbackListener {
+        override fun onSuccess(filePath: String) {
+            // PDF created at filePath
+        }
         override fun onFailure(errorMsg: String) {
             // Handle error
-        }
-
-        override fun onSuccess(filePath: String) {
-            // PDF created successfully at filePath
         }
     })
     .create()
 ```
 
-### Java
+### With Kotlin Coroutines
 
-```java
-// Use app-specific storage (recommended, no permissions needed)
-String savePath = CreatePdf.getDefaultSavePath(context, "MyPDFs");
+```kotlin
+lifecycleScope.launch {
+    val result = CreatePdf(context)
+        .setPdfName("document")
+        .setContent("<html><body><h1>Hello World</h1></body></html>")
+        .setFilePath(CreatePdf.getDefaultSavePath(context))
+        .createAsync()
 
-new CreatePdf(context)
-    .setPdfName("FirstPdf")
-    .openPrintDialog(false)
-    .setContentBaseUrl(null)
-    .setPageSize(PrintAttributes.MediaSize.ISO_A4)
-    .setFilePath(savePath)
-    .setContent("<html><body><h1>Hello World</h1></body></html>")
-    .setCallbackListener(new CreatePdf.PdfCallbackListener() {
-        @Override
-        public void onFailure(@NotNull String errorMsg) {
-            // Handle error
-        }
+    result.onSuccess { filePath ->
+        // PDF created at filePath
+    }.onFailure { error ->
+        // Handle error
+    }
+}
+```
 
-        @Override
-        public void onSuccess(@NotNull String filePath) {
-            // PDF created successfully at filePath
-        }
-    })
-    .create();
+### Generate PDF from URL
+
+```kotlin
+CreatePdf(context)
+    .setPdfName("webpage")
+    .setUrl("https://example.com")
+    .setTimeout(60_000) // 60 seconds for web pages
+    .setCallbackListener(listener)
+    .create()
+```
+
+### Generate PDF from Asset File
+
+```kotlin
+CreatePdf(context)
+    .setPdfName("invoice")
+    .setAssetPath("templates/invoice.html")
+    .setCallbackListener(listener)
+    .create()
+```
+
+### Landscape with Custom Margins
+
+```kotlin
+CreatePdf(context)
+    .setPdfName("report")
+    .setContent(htmlContent)
+    .setLandscape(true)
+    .setMarginsFromMm(10f, 10f, 10f, 10f) // 10mm margins
+    .setCallbackListener(listener)
+    .create()
+```
+
+### Custom Resolution (DPI)
+
+```kotlin
+CreatePdf(context)
+    .setPdfName("high-quality")
+    .setContent(htmlContent)
+    .setResolution(300) // 300 DPI (default is 600)
+    .setCallbackListener(listener)
+    .create()
 ```
 
 ## API Reference
 
-| Method | Type | Description |
-|--------|------|-------------|
-| `setPdfName` | String | Name for the PDF file (without extension) |
-| `openPrintDialog` | Boolean | If `true`, opens Android print dialog after PDF creation |
-| `setContentBaseUrl` | String? | Base URL for loading assets (same as WebView baseUrl) |
-| `setPageSize` | PrintAttributes.MediaSize | Page size (e.g., `ISO_A4`, `ISO_A3`, `NA_LETTER`) |
-| `setContent` | String | HTML or text content to convert to PDF |
-| `setFilePath` | String | Directory path to save the PDF |
-| `setCallbackListener` | PdfCallbackListener | Callback for success/failure notifications |
+### Content Sources (use one)
+
+| Method | Description |
+|--------|-------------|
+| `setContent(html)` | Set HTML/text content to convert |
+| `setUrl(url)` | Load URL and convert to PDF (requires INTERNET permission) |
+| `setAssetPath(path)` | Load HTML from assets folder |
+
+### Page Configuration
+
+| Method | Default | Description |
+|--------|---------|-------------|
+| `setPageSize(size)` | `ISO_A4` | Page size (ISO_A4, NA_LETTER, etc.) |
+| `setLandscape(bool)` | `false` | Enable landscape orientation |
+| `setMargins(l,t,r,b)` | `NO_MARGINS` | Set margins in mils (1/1000 inch) |
+| `setMarginsFromMm(l,t,r,b)` | - | Set margins in millimeters |
+| `setResolution(dpi)` | `600` | PDF resolution/quality |
+
+### Output Configuration
+
+| Method | Description |
+|--------|-------------|
+| `setPdfName(name)` | PDF filename (without .pdf extension) |
+| `setFilePath(path)` | Directory to save PDF |
+| `openPrintDialog(bool)` | Open print dialog after creation |
+
+### Advanced Options
+
+| Method | Default | Description |
+|--------|---------|-------------|
+| `setTimeout(ms)` | `30000` | Timeout in milliseconds |
+| `setContentBaseUrl(url)` | `null` | Base URL for relative paths |
+
+### Creation Methods
+
+| Method | Description |
+|--------|-------------|
+| `create()` | Create PDF asynchronously with callbacks |
+| `createAsync()` | Create PDF with Kotlin Coroutines (returns `Result<String>`) |
 
 ### Helper Methods
 
 | Method | Description |
 |--------|-------------|
-| `CreatePdf.getDefaultSavePath(context, subdirectory)` | Returns app-specific storage path (no permissions needed) |
-
-## Storage
-
-Starting with version 2.0, the library uses app-specific storage by default, which doesn't require any storage permissions. Use `CreatePdf.getDefaultSavePath()` to get a safe storage path.
-
-If you need to save to a custom location, ensure your app has the appropriate permissions.
+| `CreatePdf.getDefaultSavePath(context, subdir)` | Get app-specific storage path (no permissions needed) |
 
 ## Requirements
 
@@ -110,11 +173,21 @@ If you need to save to a custom location, ensure your app has the appropriate pe
 - **Compile SDK**: 35 (Android 15)
 - **Kotlin**: 2.0+
 
+## Permissions
+
+For **URL loading**, add to `AndroidManifest.xml`:
+```xml
+<uses-permission android:name="android.permission.INTERNET" />
+```
+
+**No storage permissions needed** when using `getDefaultSavePath()`.
+
 ## Migration from v1.x
 
-1. Update the dependency to use JitPack
+1. Update dependency to use JitPack
 2. Replace `Environment.getExternalStorageDirectory()` with `CreatePdf.getDefaultSavePath()`
 3. Remove storage permissions if using app-specific storage
+4. `setPageSize()` is now optional (defaults to A4)
 
 ## Questions?
 
