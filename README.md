@@ -31,7 +31,7 @@ Add the dependency to your app's `build.gradle`:
 
 ```groovy
 dependencies {
-    implementation 'com.github.UttamPanchasara:PDF-Generator:2.0.0'
+    implementation 'com.github.UttamPanchasara:PDF-Generator:v2.0.0'
 }
 ```
 
